@@ -31,7 +31,7 @@
   </div>
 
   <script>
-    const API_BASE = "http://127.0.0.1:8000";
+    const API_BASE = "https://nauka-progrmowania.onrender.com";
 
     const languagesEl = document.getElementById("languages");
     const lessonsEl = document.getElementById("lessons");
@@ -51,7 +51,7 @@
 
     async function loadQuiz(lessonId) {
       const res = await fetch(`${API_BASE}/quiz/${lessonId}`);
-      return await res.json(); // może być null
+      return await res.json();
     }
 
     async function loadLessons(languageId, languageName) {
@@ -86,9 +86,8 @@
         const status = document.createElement("div");
         status.className = "result";
 
-        // status ukończenia z localStorage
         if (localStorage.getItem(`done:${lesson.id}`) === "1") {
-          status.textContent = "Status: Ukończone";
+          status.textContent = "Status: Ukończone ✅";
         } else {
           status.textContent = "Status: Nieukończone";
         }
@@ -122,11 +121,11 @@
 
             optBtn.onclick = () => {
               if (idx === quiz.answer_index) {
-                result.textContent = "Dobrze! Zapisano postęp.";
+                result.textContent = "✅ Dobrze! Zapisano postęp.";
                 localStorage.setItem(`done:${lesson.id}`, "1");
-                status.textContent = "Status: Ukończone";
+                status.textContent = "Status: Ukończone ✅";
               } else {
-                result.textContent = "Nie, spróbuj jeszcze raz.";
+                result.textContent = "❌ Nie, spróbuj jeszcze raz.";
               }
             };
 
