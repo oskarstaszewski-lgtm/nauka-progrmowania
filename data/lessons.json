@@ -1,0 +1,11 @@
+{
+  "python": [
+    {"id": "py-1", "title": "Zmienne i typy", "content": "W Pythonie zmienne nie wymagają deklaracji typu..."}
+  ],
+  "javascript": [
+    {"id": "js-1", "title": "Zmienne: let/const", "content": "W JS używaj const domyślnie, let gdy musisz zmieniać..."}
+  ],
+  "sql": [
+    {"id": "sql-1", "title": "SELECT – podstawy", "content": "SELECT kolumny FROM tabela WHERE warunek;"}
+  ]
+}

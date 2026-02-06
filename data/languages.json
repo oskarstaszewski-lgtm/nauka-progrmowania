@@ -1,0 +1,5 @@
+[
+  {"id": "python", "name": "Python", "level": "beginner"},
+  {"id": "javascript", "name": "JavaScript", "level": "beginner"},
+  {"id": "sql", "name": "SQL", "level": "beginner"}
+]

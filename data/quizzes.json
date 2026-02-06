@@ -1,0 +1,20 @@
+{
+  "py-1": {
+    "lesson_id": "py-1",
+    "question": "Jak w Pythonie przypiszesz wartość 5 do zmiennej x?",
+    "options": ["x == 5", "x = 5", "let x = 5"],
+    "answer_index": 1
+  },
+  "js-1": {
+    "lesson_id": "js-1",
+    "question": "Czego użyjesz w JS do stałej (zmienna bez ponownego przypisania)?",
+    "options": ["var", "let", "const"],
+    "answer_index": 2
+  },
+  "sql-1": {
+    "lesson_id": "sql-1",
+    "question": "Które polecenie służy do pobrania danych?",
+    "options": ["SELECT", "INSERT", "DELETE"],
+    "answer_index": 0
+  }
+}

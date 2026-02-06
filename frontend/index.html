@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nauka Programowania</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 24px; max-width: 900px; }
+    .row { display: flex; gap: 24px; align-items: flex-start; }
+    .card { border: 1px solid #ddd; border-radius: 8px; padding: 16px; width: 100%; }
+    button { padding: 8px 12px; margin: 6px 6px 0 0; cursor: pointer; }
+    pre { background: #f6f6f6; padding: 12px; border-radius: 8px; white-space: pre-wrap; }
+    h2 { margin-top: 0; }
+    .result { margin-top: 10px; font-weight: bold; }
+    hr { margin: 16px 0; border: none; border-top: 1px solid #eee; }
+  </style>
+</head>
+<body>
+  <h1>Nauka Programowania</h1>
+
+  <div class="row">
+    <div class="card">
+      <h2>Języki</h2>
+      <div id="languages">Ładowanie...</div>
+    </div>
+
+    <div class="card">
+      <h2>Lekcje</h2>
+      <div id="lessons">Wybierz język po lewej.</div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = "http://127.0.0.1:8000";
+
+    const languagesEl = document.getElementById("languages");
+    const lessonsEl = document.getElementById("lessons");
+
+    async function loadLanguages() {
+      const res = await fetch(`${API_BASE}/languages`);
+      const langs = await res.json();
+
+      languagesEl.innerHTML = "";
+      for (const lang of langs) {
+        const btn = document.createElement("button");
+        btn.textContent = lang.name;
+        btn.onclick = () => loadLessons(lang.id, lang.name);
+        languagesEl.appendChild(btn);
+      }
+    }
+
+    async function loadQuiz(lessonId) {
+      const res = await fetch(`${API_BASE}/quiz/${lessonId}`);
+      return await res.json(); // może być null
+    }
+
+    async function loadLessons(languageId, languageName) {
+      lessonsEl.textContent = "Ładowanie lekcji...";
+      const res = await fetch(`${API_BASE}/lessons/${languageId}`);
+      const lessons = await res.json();
+
+      if (!Array.isArray(lessons) || lessons.length === 0) {
+        lessonsEl.textContent = `Brak lekcji dla ${languageName}.`;
+        return;
+      }
+
+      lessonsEl.innerHTML = "";
+
+      for (const lesson of lessons) {
+        const wrapper = document.createElement("div");
+
+        const title = document.createElement("h3");
+        title.textContent = lesson.title;
+
+        const content = document.createElement("pre");
+        content.textContent = lesson.content;
+
+        const quizBtn = document.createElement("button");
+        quizBtn.textContent = "Pokaż quiz";
+
+        const quizBox = document.createElement("div");
+
+        const result = document.createElement("div");
+        result.className = "result";
+
+        const status = document.createElement("div");
+        status.className = "result";
+
+        // status ukończenia z localStorage
+        if (localStorage.getItem(`done:${lesson.id}`) === "1") {
+          status.textContent = "Status: Ukończone";
+        } else {
+          status.textContent = "Status: Nieukończone";
+        }
+
+        quizBtn.onclick = async () => {
+          result.textContent = "";
+          quizBox.textContent = "Ładowanie quizu...";
+
+          let quiz;
+          try {
+            quiz = await loadQuiz(lesson.id);
+          } catch (e) {
+            quizBox.textContent = "Błąd pobierania quizu.";
+            return;
+          }
+
+          if (!quiz) {
+            quizBox.textContent = "Brak quizu dla tej lekcji.";
+            return;
+          }
+
+          quizBox.innerHTML = "";
+
+          const q = document.createElement("p");
+          q.innerHTML = `<b>${quiz.question}</b>`;
+          quizBox.appendChild(q);
+
+          quiz.options.forEach((opt, idx) => {
+            const optBtn = document.createElement("button");
+            optBtn.textContent = opt;
+
+            optBtn.onclick = () => {
+              if (idx === quiz.answer_index) {
+                result.textContent = "Dobrze! Zapisano postęp.";
+                localStorage.setItem(`done:${lesson.id}`, "1");
+                status.textContent = "Status: Ukończone";
+              } else {
+                result.textContent = "Nie, spróbuj jeszcze raz.";
+              }
+            };
+
+            quizBox.appendChild(optBtn);
+          });
+        };
+
+        wrapper.appendChild(title);
+        wrapper.appendChild(content);
+        wrapper.appendChild(quizBtn);
+        wrapper.appendChild(quizBox);
+        wrapper.appendChild(result);
+        wrapper.appendChild(status);
+        wrapper.appendChild(document.createElement("hr"));
+
+        lessonsEl.appendChild(wrapper);
+      }
+    }
+
+    loadLanguages().catch(err => {
+      languagesEl.textContent = "Błąd ładowania języków: " + err;
+    });
+  </script>
+</body>
+</html>
