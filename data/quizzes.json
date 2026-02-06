@@ -1,76 +1,252 @@
 {
   "py-1": [
-    {
-      "id": "py-1-q1",
-      "type": "mcq",
-      "question": "Jak w Pythonie przypiszesz wartość 5 do zmiennej x?",
-      "options": ["x == 5", "x = 5", "let x = 5"],
-      "answer_index": 1
-    },
-    {
-      "id": "py-1-q2",
-      "type": "input",
-      "question": "Napisz linijkę kodu, która wypisze tekst: Hello",
-      "placeholder": "np. print(\"Hello\")",
-      "answer_text": "print(\"Hello\")",
-      "case_sensitive": true,
-      "trim": true
-    },
-    {
-      "id": "py-1-q3",
-      "type": "input",
-      "question": "Utwórz listę o nazwie nums z elementami 1,2,3",
-      "placeholder": "Wpisz kod...",
-      "answer_text": "nums = [1, 2, 3]",
-      "case_sensitive": false,
-      "trim": true
-    }
+{
+    "id": "py-1-q1",
+    "type": "mcq",
+    "question": "Jak w Pythonie przypiszesz wartość 5 do zmiennej x?",
+    "options": ["x == 5", "x = 5", "let x = 5"],
+    "answer_index": 1
+  },
+  {
+    "id": "py-1-q2",
+    "type": "input",
+    "question": "Napisz linijkę kodu, która wypisze tekst: Hello",
+    "placeholder": "np. print(\"Hello\")",
+    "answer_text": "print(\"Hello\")",
+    "case_sensitive": false,
+    "trim": true
+  },
+  {
+    "id": "py-1-q3",
+    "type": "input",
+    "question": "Utwórz listę o nazwie nums z elementami 1, 2, 3",
+    "placeholder": "np. nums = [1, 2, 3]",
+    "answer_text": "nums = [1, 2, 3]",
+    "case_sensitive": false,
+    "trim": true
+  },
+  {
+    "id": "py-1-q4",
+    "type": "input",
+    "question": "Zwiększ zmienną x o 1 (zakładamy, że x już istnieje)",
+    "placeholder": "np. x = x + 1",
+    "answer_text": "x += 1",
+    "case_sensitive": false,
+    "trim": true
+  },
+  {
+    "id": "py-1-q5",
+    "type": "input",
+    "question": "Napisz instrukcję if: jeśli x jest większe od 10, wypisz \"big\"",
+    "placeholder": "Wpisz kod...",
+    "answer_text": "if x > 10: print(\"big\")",
+    "case_sensitive": false,
+    "trim": true
+  },
+  {
+    "id": "py-1-q6",
+    "type": "mcq",
+    "question": "Jak sprawdzić typ zmiennej a?",
+    "options": ["typeof(a)", "type(a)", "a.type()"],
+    "answer_index": 1
+  },
+  {
+    "id": "py-1-q7",
+    "type": "input",
+    "question": "Napisz pętlę, która wypisze liczby od 0 do 2 (włącznie z 0, bez 3)",
+    "placeholder": "np. for i in range(...): ...",
+    "answer_text": "for i in range(3): print(i)",
+    "case_sensitive": false,
+    "trim": true
+  },
+  {
+    "id": "py-1-q8",
+    "type": "input",
+    "question": "Stwórz słownik person z kluczami: name='Oskar', age=20",
+    "placeholder": "np. person = {...}",
+    "answer_text": "person = {\"name\": \"Oskar\", \"age\": 20}",
+    "case_sensitive": false,
+    "trim": true
+  },
+  {
+    "id": "py-1-q9",
+    "type": "input",
+    "question": "Pobierz z listy nums element o indeksie 0 do zmiennej first",
+    "placeholder": "np. first = nums[0]",
+    "answer_text": "first = nums[0]",
+    "case_sensitive": false,
+    "trim": true
+  },
+  {
+    "id": "py-1-q10",
+    "type": "input",
+    "question": "Zdefiniuj funkcję add(a, b), która zwraca sumę",
+    "placeholder": "def add(a, b): ...",
+    "answer_text": "def add(a, b): return a + b",
+    "case_sensitive": false,
+    "trim": true
+  }
   ],
   "js-1": [
     {
-      "id": "js-1-q1",
-      "type": "mcq",
-      "question": "Czego użyjesz w JS do stałej (zmienna bez ponownego przypisania)?",
-      "options": ["var", "let", "const"],
-      "answer_index": 2
-    },
-    {
-      "id": "js-1-q2",
-      "type": "input",
-      "question": "Napisz deklarację stałej x ustawionej na 5",
-      "placeholder": "np. const x = 5;",
-      "answer_text": "const x = 5;",
-      "case_sensitive": false,
-      "trim": true
-    },
-    {
-      "id": "js-1-q3",
-      "type": "input",
-      "question": "Napisz linijkę, która wypisze w konsoli: Hello",
-      "placeholder": "Wpisz kod...",
-      "answer_text": "console.log(\"Hello\");",
-      "case_sensitive": false,
-      "trim": true
-    }
+    "id": "js-1-q1",
+    "type": "mcq",
+    "question": "Czego użyjesz w JS do stałej (zmienna bez ponownego przypisania)?",
+    "options": ["var", "let", "const"],
+    "answer_index": 2
+  },
+  {
+    "id": "js-1-q2",
+    "type": "input",
+    "question": "Napisz deklarację stałej x ustawionej na 5",
+    "placeholder": "np. const x = 5;",
+    "answer_text": "const x = 5;",
+    "case_sensitive": false,
+    "trim": true
+  },
+  {
+    "id": "js-1-q3",
+    "type": "input",
+    "question": "Napisz linijkę, która wypisze w konsoli: Hello",
+    "placeholder": "np. console.log(\"Hello\");",
+    "answer_text": "console.log(\"Hello\");",
+    "case_sensitive": false,
+    "trim": true
+  },
+  {
+    "id": "js-1-q4",
+    "type": "mcq",
+    "question": "Jak zrobić tablicę z liczbami 1,2,3 w JS?",
+    "options": ["(1,2,3)", "[1,2,3]", "{1,2,3}"],
+    "answer_index": 1
+  },
+  {
+    "id": "js-1-q5",
+    "type": "input",
+    "question": "Dodaj 1 do zmiennej x (załóż, że x istnieje)",
+    "placeholder": "np. x = x + 1;",
+    "answer_text": "x += 1;",
+    "case_sensitive": false,
+    "trim": true
+  },
+  {
+    "id": "js-1-q6",
+    "type": "input",
+    "question": "Napisz if: jeśli x > 10, wypisz \"big\" w konsoli",
+    "placeholder": "Wpisz kod...",
+    "answer_text": "if (x > 10) console.log(\"big\");",
+    "case_sensitive": false,
+    "trim": true
+  },
+  {
+    "id": "js-1-q7",
+    "type": "input",
+    "question": "Zrób pętlę for, która wypisze 0,1,2",
+    "placeholder": "for (...) { ... }",
+    "answer_text": "for (let i = 0; i < 3; i++) console.log(i);",
+    "case_sensitive": false,
+    "trim": true
+  },
+  {
+    "id": "js-1-q8",
+    "type": "input",
+    "question": "Stwórz obiekt person z polami name: \"Oskar\", age: 20",
+    "placeholder": "const person = {...};",
+    "answer_text": "const person = { name: \"Oskar\", age: 20 };",
+    "case_sensitive": false,
+    "trim": true
+  },
+  {
+    "id": "js-1-q9",
+    "type": "input",
+    "question": "Z tablicy nums pobierz element o indeksie 0 do zmiennej first",
+    "placeholder": "const first = ...;",
+    "answer_text": "const first = nums[0];",
+    "case_sensitive": false,
+    "trim": true
+  },
+  {
+    "id": "js-1-q10",
+    "type": "input",
+    "question": "Zdefiniuj funkcję add(a, b), która zwraca sumę",
+    "placeholder": "function add(a,b){...}",
+    "answer_text": "function add(a, b) { return a + b; }",
+    "case_sensitive": false,
+    "trim": true
+  }
   ],
   "sql-1": [
-    {
-      "id": "sql-1-q1",
-      "type": "input",
-      "question": "Napisz SQL, który wybierze wszystkie kolumny z tabeli users",
-      "placeholder": "SELECT ...",
-      "answer_text": "SELECT * FROM users;",
-      "case_sensitive": false,
-      "trim": true
-    },
-    {
-      "id": "sql-1-q2",
-      "type": "input",
-      "question": "Napisz SQL, który wybierze kolumny id, name z tabeli users",
-      "placeholder": "SELECT ...",
-      "answer_text": "SELECT id, name FROM users;",
-      "case_sensitive": false,
-      "trim": true
-    }
+{
+    "id": "sql-1-q1",
+    "type": "input",
+    "question": "Napisz SQL, który wybierze wszystkie kolumny z tabeli users",
+    "placeholder": "SELECT ...",
+    "answer_text": "SELECT * FROM users;",
+    "case_sensitive": false,
+    "trim": true
+  },
+  {
+    "id": "sql-1-q2",
+    "type": "input",
+    "question": "Napisz SQL, który wybierze kolumny id, name z tabeli users",
+    "placeholder": "SELECT ...",
+    "answer_text": "SELECT id, name FROM users;",
+    "case_sensitive": false,
+    "trim": true
+  },
+  {
+    "id": "sql-1-q3",
+    "type": "input",
+    "question": "Wybierz użytkowników, których age > 18",
+    "placeholder": "SELECT ... WHERE ...",
+    "answer_text": "SELECT * FROM users WHERE age > 18;",
+    "case_sensitive": false,
+    "trim": true
+  },
+  {
+    "id": "sql-1-q4",
+    "type": "input",
+    "question": "Posortuj użytkowników po age malejąco",
+    "placeholder": "SELECT ... ORDER BY ...",
+    "answer_text": "SELECT * FROM users ORDER BY age DESC;",
+    "case_sensitive": false,
+    "trim": true
+  },
+  {
+    "id": "sql-1-q5",
+    "type": "input",
+    "question": "Policz ilu jest użytkowników (użyj COUNT)",
+    "placeholder": "SELECT COUNT(...) ...",
+    "answer_text": "SELECT COUNT(*) FROM users;",
+    "case_sensitive": false,
+    "trim": true
+  },
+  {
+    "id": "sql-1-q6",
+    "type": "input",
+    "question": "Wybierz unikalne wartości city z tabeli users (DISTINCT)",
+    "placeholder": "SELECT DISTINCT ...",
+    "answer_text": "SELECT DISTINCT city FROM users;",
+    "case_sensitive": false,
+    "trim": true
+  },
+  {
+    "id": "sql-1-q7",
+    "type": "input",
+    "question": "Wybierz użytkowników, których name zaczyna się na 'A' (LIKE)",
+    "placeholder": "SELECT ... WHERE ...",
+    "answer_text": "SELECT * FROM users WHERE name LIKE 'A%';",
+    "case_sensitive": false,
+    "trim": true
+  },
+  {
+    "id": "sql-1-q8",
+    "type": "input",
+    "question": "Pobierz maksymalny wiek użytkownika (MAX)",
+    "placeholder": "SELECT MAX(...) ...",
+    "answer_text": "SELECT MAX(age) FROM users;",
+    "case_sensitive": false,
+    "trim": true
+  }
   ]
 }
