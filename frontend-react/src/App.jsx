@@ -187,7 +187,7 @@ export default function App() {
             <div className="hero">
               <div className="hero-title">Nauka Programowania</div>
               <div className="hero-sub">Języki • Lekcje • Quiz • Postęp</div>
-              <div className="hero-api">API: {API_BASE}</div>
+
             </div>
 
             <div className="card">
@@ -234,7 +234,7 @@ export default function App() {
               ) : (
                 <div className="two" style={{ marginTop: 12 }}>
                   
-                  <div className="card">
+                  <div className="card lessonPanel">
                     {selectedLesson ? (
                       <>
                         <div className="row">
@@ -327,13 +327,14 @@ export default function App() {
               )}
             </div>
 
-            <div className="card">
-              <div className="card-title">Następny krok</div>
-              <div className="card-sub">Dodamy więcej lekcji i po 10 pytań na lekcję.</div>
-            </div>
+
           </div>
         </div>
       </div>
+      <div style={{ marginTop: 16, textAlign: "center", color: "#64748b", fontSize: 13 }}>
+  Aplikacja została stworzona przez Oskar Staszewski 7661 ININ_4
+</div>
+
     </div>
   );
 }

@@ -203,3 +203,7 @@ body {
 }
 .feedback.ok { background: #f0fdf4; border-color: #bbf7d0; color: #166534; }
 .feedback.bad { background: #fef2f2; border-color: #fecaca; color: #991b1b; }
+
+.two { align-items: stretch; }
+.lessonPanel { height: 100%; display: flex; flex-direction: column; }
+.quiz { flex: 1; }
