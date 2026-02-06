@@ -1,20 +1,76 @@
 {
-  "py-1": {
-    "lesson_id": "py-1",
-    "question": "Jak w Pythonie przypiszesz wartość 5 do zmiennej x?",
-    "options": ["x == 5", "x = 5", "let x = 5"],
-    "answer_index": 1
-  },
-  "js-1": {
-    "lesson_id": "js-1",
-    "question": "Czego użyjesz w JS do stałej (zmienna bez ponownego przypisania)?",
-    "options": ["var", "let", "const"],
-    "answer_index": 2
-  },
-  "sql-1": {
-    "lesson_id": "sql-1",
-    "question": "Które polecenie służy do pobrania danych?",
-    "options": ["SELECT", "INSERT", "DELETE"],
-    "answer_index": 0
-  }
+  "py-1": [
+    {
+      "id": "py-1-q1",
+      "type": "mcq",
+      "question": "Jak w Pythonie przypiszesz wartość 5 do zmiennej x?",
+      "options": ["x == 5", "x = 5", "let x = 5"],
+      "answer_index": 1
+    },
+    {
+      "id": "py-1-q2",
+      "type": "input",
+      "question": "Napisz linijkę kodu, która wypisze tekst: Hello",
+      "placeholder": "np. print(\"Hello\")",
+      "answer_text": "print(\"Hello\")",
+      "case_sensitive": true,
+      "trim": true
+    },
+    {
+      "id": "py-1-q3",
+      "type": "input",
+      "question": "Utwórz listę o nazwie nums z elementami 1,2,3",
+      "placeholder": "Wpisz kod...",
+      "answer_text": "nums = [1, 2, 3]",
+      "case_sensitive": false,
+      "trim": true
+    }
+  ],
+  "js-1": [
+    {
+      "id": "js-1-q1",
+      "type": "mcq",
+      "question": "Czego użyjesz w JS do stałej (zmienna bez ponownego przypisania)?",
+      "options": ["var", "let", "const"],
+      "answer_index": 2
+    },
+    {
+      "id": "js-1-q2",
+      "type": "input",
+      "question": "Napisz deklarację stałej x ustawionej na 5",
+      "placeholder": "np. const x = 5;",
+      "answer_text": "const x = 5;",
+      "case_sensitive": false,
+      "trim": true
+    },
+    {
+      "id": "js-1-q3",
+      "type": "input",
+      "question": "Napisz linijkę, która wypisze w konsoli: Hello",
+      "placeholder": "Wpisz kod...",
+      "answer_text": "console.log(\"Hello\");",
+      "case_sensitive": false,
+      "trim": true
+    }
+  ],
+  "sql-1": [
+    {
+      "id": "sql-1-q1",
+      "type": "input",
+      "question": "Napisz SQL, który wybierze wszystkie kolumny z tabeli users",
+      "placeholder": "SELECT ...",
+      "answer_text": "SELECT * FROM users;",
+      "case_sensitive": false,
+      "trim": true
+    },
+    {
+      "id": "sql-1-q2",
+      "type": "input",
+      "question": "Napisz SQL, który wybierze kolumny id, name z tabeli users",
+      "placeholder": "SELECT ...",
+      "answer_text": "SELECT id, name FROM users;",
+      "case_sensitive": false,
+      "trim": true
+    }
+  ]
 }

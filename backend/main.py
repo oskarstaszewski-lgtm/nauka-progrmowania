@@ -5,11 +5,10 @@ import json
 
 app = FastAPI(title="Nauka Programowania API")
 
-# ZMIEŃ TEN ADRES na swój React URL z Render (ten z paska przeglądarki)
 ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "https://nauka-progrmowania-os.onrender.com/",  # <-- tu wstaw swój
+    "https://nauka-progrmowania-os.onrender.com",
 ]
 
 app.add_middleware(
@@ -47,4 +46,5 @@ def lessons(language_id: str):
 @app.get("/quiz/{lesson_id}")
 def quiz(lesson_id: str):
     quizzes = load_json(DATA_DIR / "quizzes.json")
-    return quizzes.get(lesson_id, None)
+    # teraz zwracamy LISTĘ pytań (albo pustą listę)
+    return quizzes.get(lesson_id, [])
