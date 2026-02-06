@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
-const API_BASE = "https://nauka-programowania.onrender.com"; // Twój backend na Render
+const API_BASE = "https://nauka-progrmowania-api-2.onrender.com"; 
 
 function Badge({ children }) {
   return (

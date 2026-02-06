@@ -5,10 +5,16 @@ import json
 
 app = FastAPI(title="Nauka Programowania API")
 
+# ZMIEŃ TEN ADRES na swój React URL z Render (ten z paska przeglądarki)
+ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "https://nauka-progrmowania-os.onrender.com/",  # <-- tu wstaw swój
+]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],        
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -23,7 +29,7 @@ def load_json(path: Path):
 
 @app.get("/")
 def root():
-    return {"message": "Backend działa"}
+    return {"message": "Backend działa ✅"}
 
 @app.get("/health")
 def health():
