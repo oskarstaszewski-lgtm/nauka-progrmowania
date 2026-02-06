@@ -1,90 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
+import "./index.css";
 
 const API_BASE = "https://nauka-progrmowania-api-2.onrender.com";
-
-function Badge({ children }) {
-  return (
-    <span style={{
-      display: "inline-block",
-      padding: "4px 10px",
-      borderRadius: 999,
-      fontSize: 12,
-      border: "1px solid #e5e7eb",
-      background: "#f9fafb",
-      color: "#111827",
-      whiteSpace: "nowrap"
-    }}>
-      {children}
-    </span>
-  );
-}
-
-function Card({ title, subtitle, right, children }) {
-  return (
-    <div style={{
-      border: "1px solid #e5e7eb",
-      background: "white",
-      borderRadius: 16,
-      padding: 16,
-      boxShadow: "0 1px 2px rgba(0,0,0,0.04)"
-    }}>
-      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12 }}>
-        <div>
-          <div style={{ fontSize: 16, fontWeight: 900, color: "#111827" }}>{title}</div>
-          {subtitle ? <div style={{ fontSize: 13, color: "#6b7280", marginTop: 2 }}>{subtitle}</div> : null}
-        </div>
-        {right}
-      </div>
-      <div style={{ marginTop: 12 }}>{children}</div>
-    </div>
-  );
-}
-
-function Button({ children, onClick, variant = "primary", disabled }) {
-  const styles = useMemo(() => {
-    const base = {
-      padding: "10px 12px",
-      borderRadius: 12,
-      fontWeight: 800,
-      border: "1px solid transparent",
-      cursor: disabled ? "not-allowed" : "pointer",
-      opacity: disabled ? 0.6 : 1,
-      transition: "transform 0.02s ease-in-out"
-    };
-    if (variant === "ghost") return { ...base, background: "transparent", borderColor: "#e5e7eb", color: "#111827" };
-    if (variant === "danger") return { ...base, background: "#fee2e2", borderColor: "#fecaca", color: "#991b1b" };
-    return { ...base, background: "#111827", borderColor: "#111827", color: "white" };
-  }, [variant, disabled]);
-
-  return (
-    <button
-      onClick={disabled ? undefined : onClick}
-      style={styles}
-      onMouseDown={(e) => { if (!disabled) e.currentTarget.style.transform = "scale(0.99)"; }}
-      onMouseUp={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
-    >
-      {children}
-    </button>
-  );
-}
-
-function Input({ value, onChange, placeholder }) {
-  return (
-    <input
-      value={value}
-      placeholder={placeholder}
-      onChange={(e) => onChange(e.target.value)}
-      style={{
-        width: "100%",
-        padding: "12px 12px",
-        borderRadius: 12,
-        border: "1px solid #e5e7eb",
-        outline: "none",
-        fontSize: 14
-      }}
-    />
-  );
-}
 
 function normalizeText(s, { trim = true, caseSensitive = false } = {}) {
   let out = String(s ?? "");
@@ -94,13 +11,10 @@ function normalizeText(s, { trim = true, caseSensitive = false } = {}) {
   return out;
 }
 
-// ✅ kluczowe: normalizujemy quiz z backendu na jednolity format
 function normalizeQuiz(raw) {
   let items = [];
   if (Array.isArray(raw)) items = raw;
   else if (raw && typeof raw === "object") items = [raw];
-  else items = [];
-
   return items.map((q, i) => {
     const type = q.type ?? (Array.isArray(q.options) ? "mcq" : "input");
     const id = q.id ?? `auto-${i}`;
@@ -191,8 +105,7 @@ export default function App() {
         setInputAnswer("");
 
         const raw = await fetchJson(`${API_BASE}/quiz/${selectedLesson.id}`);
-        const items = normalizeQuiz(raw);
-        setQuizItems(items);
+        setQuizItems(normalizeQuiz(raw));
       } catch {
         setError("Nie udało się pobrać quizu.");
       } finally {
@@ -235,16 +148,14 @@ export default function App() {
 
     const user = normalizeText(inputAnswer, {
       trim: currentQ.trim ?? true,
-      caseSensitive: currentQ.case_sensitive ?? false
+      caseSensitive: currentQ.case_sensitive ?? false,
     });
-
     const expected = normalizeText(currentQ.answer_text, {
       trim: currentQ.trim ?? true,
-      caseSensitive: currentQ.case_sensitive ?? false
+      caseSensitive: currentQ.case_sensitive ?? false,
     });
 
     const ok = user === expected;
-
     setAnswered((m) => ({ ...m, [currentQ.id]: true }));
     if (ok) setScore((s) => s + 1);
     setFeedback({ ok, text: ok ? "✅ Dobrze." : "❌ Nie do końca." });
@@ -268,240 +179,175 @@ export default function App() {
   const showSummary = totalQ > 0 && allAnswered;
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f6f7fb" }}>
-      {/* pełna szerokość, bez “szarego pola”: kontent wyśrodkowany, ale szeroki */}
-      <div style={{ width: "100%", padding: 20 }}>
-        <div style={{ maxWidth: 1400, margin: "0 auto" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "320px 1fr", gap: 16, alignItems: "start" }}>
-            {/* Sidebar */}
-            <div style={{ position: "sticky", top: 16 }}>
-              <div style={{
-                borderRadius: 18,
-                padding: 16,
-                background: "linear-gradient(180deg, #111827 0%, #1f2937 100%)",
-                color: "white",
-                boxShadow: "0 8px 24px rgba(0,0,0,0.08)"
-              }}>
-                <div style={{ fontSize: 18, fontWeight: 900 }}>Nauka Programowania</div>
-                <div style={{ opacity: 0.85, marginTop: 6, fontSize: 13 }}>Języki • Lekcje • Quiz • Postęp</div>
-                <div style={{ marginTop: 12, display: "flex", gap: 8, flexWrap: "wrap" }}>
-                  <span style={{ fontSize: 12, opacity: 0.9 }}>API:</span>
-                  <span style={{ fontSize: 12, opacity: 0.9, wordBreak: "break-all" }}>{API_BASE}</span>
-                </div>
-              </div>
-
-              <div style={{ marginTop: 12 }}>
-                <Card
-                  title="Języki"
-                  subtitle={loading.languages ? "Ładowanie..." : "Wybierz język"}
-                  right={<Badge>{languages.length}</Badge>}
-                >
-                  {error ? <div style={{ color: "#b91c1c", fontSize: 13 }}>{error}</div> : null}
-
-                  <div style={{ display: "grid", gap: 10 }}>
-                    {loading.languages ? (
-                      <div style={{ color: "#6b7280", fontSize: 13 }}>Pobieram dane…</div>
-                    ) : (
-                      languages.map((lang) => {
-                        const active = selectedLang?.id === lang.id;
-                        return (
-                          <button
-                            key={lang.id}
-                            onClick={() => setSelectedLang(lang)}
-                            style={{
-                              textAlign: "left",
-                              padding: 12,
-                              borderRadius: 14,
-                              border: "1px solid " + (active ? "#111827" : "#e5e7eb"),
-                              background: active ? "#111827" : "white",
-                              color: active ? "white" : "#111827",
-                              cursor: "pointer"
-                            }}
-                          >
-                            <div style={{ fontWeight: 900 }}>{lang.name}</div>
-                            <div style={{ fontSize: 12, opacity: active ? 0.9 : 0.6 }}>Poziom: {lang.level}</div>
-                          </button>
-                        );
-                      })
-                    )}
-                  </div>
-                </Card>
-              </div>
+    <div className="app">
+      <div className="container">
+        <div className="grid">
+          {/* SIDEBAR */}
+          <div className="sidebar">
+            <div className="hero">
+              <div className="hero-title">Nauka Programowania</div>
+              <div className="hero-sub">Języki • Lekcje • Quiz • Postęp</div>
+              <div className="hero-api">API: {API_BASE}</div>
             </div>
 
-            {/* Main */}
-            <div style={{ display: "grid", gap: 16 }}>
-              <Card
-                title="Lekcje"
-                subtitle={selectedLang ? `Dla języka: ${selectedLang.name}` : "—"}
-                right={<Badge>{lessons.length}</Badge>}
-              >
-                {loading.lessons ? (
-                  <div style={{ color: "#6b7280", fontSize: 13 }}>Ładuję lekcje…</div>
-                ) : lessons.length === 0 ? (
-                  <div style={{ color: "#6b7280", fontSize: 13 }}>Brak lekcji.</div>
-                ) : (
-                  <div style={{ display: "grid", gridTemplateColumns: "360px 1fr", gap: 12 }}>
-                    <div style={{ display: "grid", gap: 10 }}>
-                      {lessons.map((l) => {
-                        const active = selectedLesson?.id === l.id;
-                        const done = localStorage.getItem(doneKey(l.id)) === "1";
-                        return (
-                          <button
-                            key={l.id}
-                            onClick={() => setSelectedLesson(l)}
-                            style={{
-                              textAlign: "left",
-                              padding: 12,
-                              borderRadius: 14,
-                              border: "1px solid " + (active ? "#111827" : "#e5e7eb"),
-                              background: active ? "#f3f4f6" : "white",
-                              cursor: "pointer"
-                            }}
-                          >
-                            <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
-                              <div style={{ fontWeight: 900, color: "#111827" }}>{l.title}</div>
-                              {done ? <Badge>Ukończone ✅</Badge> : <Badge>W trakcie</Badge>}
-                            </div>
-                            <div style={{ fontSize: 12, color: "#6b7280", marginTop: 4 }}>ID: {l.id}</div>
-                          </button>
-                        );
-                      })}
-                    </div>
+            <div className="card">
+              <div className="card-head">
+                <div>
+                  <div className="card-title">Języki</div>
+                  <div className="card-sub">{loading.languages ? "Ładowanie..." : "Wybierz język"}</div>
+                </div>
+                <span className="badge">{languages.length}</span>
+              </div>
 
-                    <div>
-                      {selectedLesson ? (
-                        <Card
-                          title={selectedLesson.title}
-                          subtitle={`Lekcja: ${selectedLesson.id}`}
-                          right={
-                            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                              <Badge>{selectedDone ? "Ukończone ✅" : "Nieukończone"}</Badge>
-                              <Button variant="ghost" onClick={resetDone}>Reset</Button>
-                            </div>
-                          }
+              {error ? <div style={{ color: "#b91c1c", marginTop: 10 }}>{error}</div> : null}
+
+              <div className="list" style={{ marginTop: 12 }}>
+                {languages.map((lang) => (
+                  <button
+                    key={lang.id}
+                    className={"itembtn " + (selectedLang?.id === lang.id ? "active" : "")}
+                    onClick={() => setSelectedLang(lang)}
+                  >
+                    <div style={{ fontWeight: 900 }}>{lang.name}</div>
+                    <div className="small">Poziom: {lang.level}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* MAIN */}
+          <div className="main">
+            <div className="card">
+              <div className="card-head">
+                <div>
+                  <div className="card-title">Lekcje</div>
+                  <div className="card-sub">{selectedLang ? `Dla języka: ${selectedLang.name}` : "—"}</div>
+                </div>
+                <span className="badge">{lessons.length}</span>
+              </div>
+
+              {loading.lessons ? (
+                <div style={{ marginTop: 12, color: "#6b7280" }}>Ładuję lekcje…</div>
+              ) : lessons.length === 0 ? (
+                <div style={{ marginTop: 12, color: "#6b7280" }}>Brak lekcji.</div>
+              ) : (
+                <div className="two" style={{ marginTop: 12 }}>
+                  <div className="list">
+                    {lessons.map((l) => {
+                      const done = localStorage.getItem(doneKey(l.id)) === "1";
+                      return (
+                        <button
+                          key={l.id}
+                          className={"itembtn " + (selectedLesson?.id === l.id ? "active" : "")}
+                          onClick={() => setSelectedLesson(l)}
                         >
-                          <div style={{
-                            background: "#0b1220",
-                            color: "#e5e7eb",
-                            borderRadius: 14,
-                            padding: 14,
-                            fontFamily:
-                              "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
-                            fontSize: 13,
-                            lineHeight: 1.6,
-                            whiteSpace: "pre-wrap"
-                          }}>
-                            {selectedLesson.content}
+                          <div className="row">
+                            <div style={{ fontWeight: 900 }}>{l.title}</div>
+                            <span className="badge">{done ? "Ukończone ✅" : "W trakcie"}</span>
                           </div>
+                          <div className="small">ID: {l.id}</div>
+                        </button>
+                      );
+                    })}
+                  </div>
 
-                          <div style={{ marginTop: 14 }}>
-                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                              <div style={{ fontWeight: 900, color: "#111827" }}>Quiz</div>
-                              {loading.quiz ? (
-                                <Badge>Ładowanie…</Badge>
-                              ) : totalQ > 0 ? (
-                                <Badge>{showSummary ? "Zakończony" : `Pytanie ${qIndex + 1}/${totalQ}`}</Badge>
-                              ) : (
-                                <Badge>Brak</Badge>
-                              )}
-                            </div>
+                  <div className="card">
+                    {selectedLesson ? (
+                      <>
+                        <div className="row">
+                          <div>
+                            <div className="card-title">{selectedLesson.title}</div>
+                            <div className="card-sub">Lekcja: {selectedLesson.id}</div>
+                          </div>
+                          <div className="row">
+                            <span className="badge">{selectedDone ? "Ukończone ✅" : "Nieukończone"}</span>
+                            <button className="btn ghost" onClick={resetDone}>Reset</button>
+                          </div>
+                        </div>
 
-                            {totalQ === 0 ? (
-                              <div style={{ color: "#6b7280", fontSize: 13, marginTop: 8 }}>
-                                Brak quizu dla tej lekcji.
-                              </div>
+                        <div className="codebox" style={{ marginTop: 12 }}>
+                          {selectedLesson.content}
+                        </div>
+
+                        <div className="quiz">
+                          <div className="row">
+                            <div style={{ fontWeight: 900 }}>Quiz</div>
+                            {loading.quiz ? (
+                              <span className="badge">Ładowanie…</span>
+                            ) : totalQ > 0 ? (
+                              <span className="badge">{showSummary ? "Zakończony" : `Pytanie ${qIndex + 1}/${totalQ}`}</span>
                             ) : (
-                              <div style={{ marginTop: 10 }}>
-                                {showSummary ? (
-                                  <div style={{ padding: 12, borderRadius: 14, border: "1px solid #e5e7eb", background: "#f9fafb" }}>
-                                    <div style={{ fontWeight: 900, color: "#111827" }}>
-                                      Wynik: {score}/{totalQ}
-                                    </div>
-                                    <div style={{ color: "#6b7280", fontSize: 13, marginTop: 4 }}>
-                                      {score === totalQ ? "✅ Super! Ukończyłeś lekcję." : "Spróbuj jeszcze raz (Reset), żeby poprawić wynik."}
-                                    </div>
-                                  </div>
-                                ) : (
-                                  <>
-                                    <div style={{ fontWeight: 900, color: "#111827" }}>
-                                      {currentQ?.question}
-                                    </div>
-
-                                    {currentQ?.type === "mcq" ? (
-                                      <div style={{ display: "grid", gap: 10, marginTop: 12 }}>
-                                        {(currentQ.options ?? []).map((opt, idx) => (
-                                          <button
-                                            key={idx}
-                                            onClick={() => answerMcq(idx)}
-                                            style={{
-                                              textAlign: "left",
-                                              padding: 12,
-                                              borderRadius: 14,
-                                              border: "1px solid #e5e7eb",
-                                              background: "white",
-                                              cursor: "pointer"
-                                            }}
-                                          >
-                                            {opt}
-                                          </button>
-                                        ))}
-                                      </div>
-                                    ) : null}
-
-                                    {currentQ?.type === "input" ? (
-                                      <div style={{ marginTop: 12, display: "grid", gap: 10 }}>
-                                        <Input
-                                          value={inputAnswer}
-                                          onChange={setInputAnswer}
-                                          placeholder={currentQ.placeholder || "Wpisz odpowiedź..."}
-                                        />
-                                        <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                                          <Button onClick={answerInput} disabled={answered[currentQ.id] || inputAnswer.trim().length === 0}>
-                                            Sprawdź
-                                          </Button>
-                                          <Button variant="ghost" onClick={() => setInputAnswer(currentQ.answer_text ?? "")} disabled={answered[currentQ.id]}>
-                                            Pokaż przykład
-                                          </Button>
-                                        </div>
-                                      </div>
-                                    ) : null}
-
-                                    {feedback ? (
-                                      <div style={{
-                                        marginTop: 12,
-                                        padding: 12,
-                                        borderRadius: 14,
-                                        border: "1px solid " + (feedback.ok ? "#bbf7d0" : "#fecaca"),
-                                        background: feedback.ok ? "#f0fdf4" : "#fef2f2",
-                                        color: feedback.ok ? "#166534" : "#991b1b",
-                                        fontWeight: 900
-                                      }}>
-                                        {feedback.text}
-                                      </div>
-                                    ) : null}
-
-                                    <div style={{ marginTop: 12, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                                      <div style={{ color: "#6b7280", fontSize: 13 }}>
-                                        Punkty: <b style={{ color: "#111827" }}>{score}</b> / {totalQ}
-                                      </div>
-                                      <Button onClick={nextQuestion} disabled={!canGoNext}>
-                                        Dalej
-                                      </Button>
-                                    </div>
-                                  </>
-                                )}
-                              </div>
+                              <span className="badge">Brak</span>
                             )}
                           </div>
-                        </Card>
-                      ) : (
-                        <div style={{ color: "#6b7280", fontSize: 13 }}>Wybierz lekcję po lewej.</div>
-                      )}
-                    </div>
+
+                          {totalQ === 0 ? (
+                            <div style={{ color: "#6b7280" }}>Brak quizu dla tej lekcji.</div>
+                          ) : showSummary ? (
+                            <div className="feedback ok">
+                              Wynik: {score}/{totalQ} {score === totalQ ? "— ukończono ✅" : "— spróbuj ponownie (Reset)"}
+                            </div>
+                          ) : (
+                            <>
+                              <div style={{ fontWeight: 900 }}>{currentQ?.question}</div>
+
+                              {currentQ?.type === "mcq" ? (
+                                <div className="mcq">
+                                  {(currentQ.options ?? []).map((opt, idx) => (
+                                    <button key={idx} className="option" onClick={() => answerMcq(idx)}>
+                                      {opt}
+                                    </button>
+                                  ))}
+                                </div>
+                              ) : null}
+
+                              {currentQ?.type === "input" ? (
+                                <div style={{ display: "grid", gap: 10 }}>
+                                  <input
+                                    className="input"
+                                    value={inputAnswer}
+                                    onChange={(e) => setInputAnswer(e.target.value)}
+                                    placeholder={currentQ.placeholder || "Wpisz odpowiedź..."}
+                                  />
+                                  <div className="row">
+                                    <button className="btn primary" onClick={answerInput} disabled={answered[currentQ.id] || inputAnswer.trim().length === 0}>
+                                      Sprawdź
+                                    </button>
+                                    <button className="btn ghost" onClick={() => setInputAnswer(currentQ.answer_text ?? "")} disabled={answered[currentQ.id]}>
+                                      Pokaż przykład
+                                    </button>
+                                  </div>
+                                </div>
+                              ) : null}
+
+                              {feedback ? (
+                                <div className={"feedback " + (feedback.ok ? "ok" : "bad")}>{feedback.text}</div>
+                              ) : null}
+
+                              <div className="row">
+                                <div style={{ color: "#6b7280" }}>
+                                  Punkty: <b>{score}</b> / {totalQ}
+                                </div>
+                                <button className="btn primary" onClick={nextQuestion} disabled={!canGoNext}>
+                                  Dalej
+                                </button>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </>
+                    ) : (
+                      <div style={{ color: "#6b7280" }}>Wybierz lekcję po lewej.</div>
+                    )}
                   </div>
-                )}
-              </Card>
+                </div>
+              )}
+            </div>
+
+            <div className="card">
+              <div className="card-title">Następny krok</div>
+              <div className="card-sub">Dodamy więcej lekcji i po 10 pytań na lekcję.</div>
             </div>
           </div>
         </div>
