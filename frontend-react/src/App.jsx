@@ -332,7 +332,7 @@ export default function App() {
         </div>
       </div>
       <div style={{ marginTop: 16, textAlign: "center", color: "#64748b", fontSize: 13 }}>
-  Aplikacja została stworzona przez Oskar Staszewski 7661 ININ_4
+  Aplikacja została stworzona przez Oskar Staszewski 76614 ININ_4
 </div>
 
     </div>
