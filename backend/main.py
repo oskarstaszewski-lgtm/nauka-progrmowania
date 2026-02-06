@@ -46,5 +46,4 @@ def lessons(language_id: str):
 @app.get("/quiz/{lesson_id}")
 def quiz(lesson_id: str):
     quizzes = load_json(DATA_DIR / "quizzes.json")
-    # teraz zwracamy LISTĘ pytań (albo pustą listę)
     return quizzes.get(lesson_id, [])
