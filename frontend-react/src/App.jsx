@@ -233,25 +233,7 @@ export default function App() {
                 <div style={{ marginTop: 12, color: "#6b7280" }}>Brak lekcji.</div>
               ) : (
                 <div className="two" style={{ marginTop: 12 }}>
-                  <div className="list">
-                    {lessons.map((l) => {
-                      const done = localStorage.getItem(doneKey(l.id)) === "1";
-                      return (
-                        <button
-                          key={l.id}
-                          className={"itembtn " + (selectedLesson?.id === l.id ? "active" : "")}
-                          onClick={() => setSelectedLesson(l)}
-                        >
-                          <div className="row">
-                            <div style={{ fontWeight: 900 }}>{l.title}</div>
-                            <span className="badge">{done ? "Ukończone ✅" : "W trakcie"}</span>
-                          </div>
-                          <div className="small">ID: {l.id}</div>
-                        </button>
-                      );
-                    })}
-                  </div>
-
+                  
                   <div className="card">
                     {selectedLesson ? (
                       <>
